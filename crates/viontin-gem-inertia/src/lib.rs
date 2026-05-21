@@ -12,7 +12,7 @@
 //!
 //! fn main() {
 //!     viontin::boot()
-//!         .gem(Inertia::new("resources/views/app.html"))
+//!         .gem(Inertia::load().entry("resources/views/app.html"))
 //!         .get("/", |_| inertia("Home", json!({ "title": "Welcome" })))
 //!         .get("/users", |_| inertia("Users/Index", json!({ "users": users })))
 //!         .serve(":3000");
@@ -29,7 +29,7 @@ pub use middleware::InertiaMiddleware;
 
 // ── Gem Facade ──
 
-use viontin_framework::gem::{GemMeta, GemKind, GemFacade, GemBinding};
+use viontin_gems::{GemBuilder, GemMeta, GemKind, GemFacade, GemBinding};
 use viontin_framework::middleware::Middleware;
 use viontin_framework::Result;
 
@@ -46,16 +46,23 @@ pub struct Inertia {
 }
 
 impl Inertia {
-    /// Create a new Inertia gem with the path to the root view template.
+    /// Entry point for the root view template.
     ///
     /// The template should contain `{{data-page}}` where the page JSON will be injected.
-    pub fn new(root_view: &str) -> Self {
-        Inertia { root_view: root_view.into() }
+    pub fn entry(mut self, root_view: &str) -> Self {
+        self.root_view = root_view.into();
+        self
     }
 
-    /// Create the Inertia middleware to register in your middleware chain.
+    /// Middleware instance (used internally by GemBinding).
     pub fn middleware() -> InertiaMiddleware {
         InertiaMiddleware::new()
+    }
+}
+
+impl GemBuilder for Inertia {
+    fn load() -> Self {
+        Inertia { root_view: String::new() }
     }
 }
 
