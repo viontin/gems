@@ -4,7 +4,7 @@ pub mod compiler;
 use std::path::Path;
 use viontin_framework::Result;
 use viontin_framework::error::FrameworkError;
-use viontin_framework::gem::{GemMeta, GemKind, GemFacade};
+use viontin_framework::gem::{GemMeta, GemKind, GemFacade, GemBinding};
 
 pub const META: GemMeta = GemMeta::new(
     "tailwind",
@@ -38,6 +38,8 @@ impl GemFacade for Gem {
         Ok(())
     }
 }
+
+impl GemBinding for Gem {}
 
 pub fn compile_project(project_root: &Path) -> Result<String> {
     let css = compiler::compile_project(project_root)

@@ -633,6 +633,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "viontest"
+version = "0.1.0"
+
+[[package]]
 name = "viontin-framework"
 version = "0.1.0"
 dependencies = [
@@ -640,6 +644,17 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.18",
+ "viontest",
+]
+
+[[package]]
+name = "viontin-gem-inertia"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "viontin-framework",
+ "viontin-gems",
 ]
 
 [[package]]
