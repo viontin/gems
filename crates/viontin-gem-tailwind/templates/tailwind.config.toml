@@ -1,0 +1,22 @@
+# TailwindCSS configuration for Viontin
+# See https://viontin.dev/docs/tailwind for full reference
+
+# Source files to scan for Tailwind classes (glob patterns)
+content = [
+    "src/**/*.rs",
+    "src/**/*.html",
+    "html/**/*.html",
+]
+
+[output]
+path = "assets/tailwind.css"
+minify = true
+
+[core]
+prefix = ""
+separator = ":"
+important = false
+safelist = []
+
+[theme.extend]
+# colors = { primary = "#3b82f6", secondary = "#64748b" }
