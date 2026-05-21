@@ -1,0 +1,12 @@
+[package]
+name = "viontin-gem-webview"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "[EXPERIMENTAL] Desktop webview gem for Viontin — wry + tao integration"
+
+[dependencies]
+viontin-framework = { path = "../../../framework/crates/framework" }
+viontin-gems = { path = "../viontin-gems" }
+wry = "0.55"
+tao = "0.35"
