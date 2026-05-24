@@ -125,6 +125,22 @@ impl GemBinding for WebviewGem {}
 ///
 /// The `addr` format follows Viontin's server convention: `":3000"` or `"127.0.0.1:3000"`.
 pub fn launch(ws_server: WsServer, addr: &str) {
+    launch_with_ipc(ws_server, addr, None);
+}
+
+/// Launch with an optional IPC handler for Rust ↔ JavaScript communication.
+///
+/// The `ipc_handler` receives JSON messages sent from JavaScript via
+/// `window.ipc.postMessage("...")` in the webview.
+///
+/// # Example
+///
+/// ```rust,ignore
+/// launch_with_ipc(ws_server, ":3000", Some(Box::new(|msg| {
+///     println!("[webview] JS says: {}", msg);
+/// })));
+/// ```
+pub fn launch_with_ipc(ws_server: WsServer, addr: &str, ipc_handler: Option<Box<dyn Fn(&str) + Send + Sync + 'static>>) {
     let cfg = config().lock().unwrap().clone();
     let addr = addr.to_owned();
     let url = format!("http://127.0.0.1:{}", addr.trim_start_matches(':'));
@@ -145,9 +161,17 @@ pub fn launch(ws_server: WsServer, addr: &str) {
         .build(&event_loop)
         .expect("[webview] Failed to create window");
 
-    let _webview = wry::WebViewBuilder::new()
+    let mut webview_builder = wry::WebViewBuilder::new()
         .with_url(&url)
-        .with_devtools(cfg.devtools)
+        .with_devtools(cfg.devtools);
+
+    if let Some(handler) = ipc_handler {
+        webview_builder = webview_builder.with_ipc_handler(move |request| {
+            handler(request.body());
+        });
+    }
+
+    let _webview = webview_builder
         .build(&window)
         .expect("[webview] Failed to create webview");
 

@@ -209,6 +209,9 @@ impl InertiaPage {
         self
     }
 
+    #[allow(dead_code)]
+    fn partial_component(&self) -> Option<&str> { self.partial_component.as_deref() }
+
     /// Create a redirect response.
     pub fn redirect(url: &str) -> Self {
         InertiaPage {
