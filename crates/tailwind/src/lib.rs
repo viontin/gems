@@ -2,9 +2,8 @@ pub mod config;
 pub mod compiler;
 
 use std::path::Path;
-use viontin_framework::Result;
-use viontin_framework::error::FrameworkError;
-use viontin_gems::{GemBuilder, GemMeta, GemKind, GemFacade, GemBinding};
+
+use viontin_gems::{GemBuilder, GemMeta, GemKind, GemFacade, GemBinding, InternalResult, InternalError};
 
 pub const META: GemMeta = GemMeta::new(
     "tailwind",
@@ -19,7 +18,7 @@ pub struct Tailwind;
 impl GemFacade for Tailwind {
     fn meta(&self) -> &GemMeta { &META }
 
-    fn before_build(&self) -> Result<()> {
+    fn before_build(&self) -> InternalResult<()> {
         let project_root = match std::env::current_dir() {
             Ok(d) => d,
             Err(e) => { eprintln!("  [tailwind] Error: {}", e); return Ok(()); }
@@ -45,16 +44,16 @@ impl GemBuilder for Tailwind {
     fn load() -> Self { Tailwind }
 }
 
-pub fn compile_project(project_root: &Path) -> Result<String> {
+pub fn compile_project(project_root: &Path) -> InternalResult<String> {
     let css = compiler::compile_project(project_root)
-        .map_err(|e| FrameworkError::Internal(e))?;
+        .map_err(|e| InternalError::Internal(e))?;
     let cfg = config::TailwindConfig::load(&project_root.join("tailwind.config.toml"));
     compiler::write_css(&css, &project_root.join(&cfg.output_path))
-        .map_err(|e| FrameworkError::Internal(e))?;
+        .map_err(|e| InternalError::Internal(e))?;
     Ok(css)
 }
 
-pub fn compile_source(content: &str) -> Result<String> {
+pub fn compile_source(content: &str) -> InternalResult<String> {
     compiler::compile_source(content)
-        .map_err(|e| FrameworkError::Internal(e))
+        .map_err(|e| InternalError::Internal(e))
 }

@@ -6,6 +6,7 @@ license = "MIT"
 description = "[EXPERIMENTAL] Core gem types, registry, and plugin loader for Viontin"
 
 [dependencies]
+viontin-core = { path = "../../../viontin/crates/core" }
 viontin-framework = { path = "../../../framework/crates/framework" }
 serde = { version = "1", features = ["derive"], optional = true }
 linkme = "0.3"

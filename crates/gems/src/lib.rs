@@ -8,4 +8,7 @@ pub trait GemBuilder: Sized {
     fn load() -> Self;
 }
 
+// Re-export core types so gems can use them without deep deps
+pub use viontin_core::{InternalResult, InternalError};
+
 pub use viontin_framework::gem::*;

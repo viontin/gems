@@ -29,9 +29,8 @@ pub use middleware::InertiaMiddleware;
 
 // ── Gem Facade ──
 
-use viontin_gems::{GemBuilder, GemMeta, GemKind, GemFacade, GemBinding};
+use viontin_gems::{GemBuilder, GemMeta, GemKind, GemFacade, GemBinding, InternalResult};
 use viontin_framework::middleware::Middleware;
-use viontin_framework::Result;
 
 pub const META: GemMeta = GemMeta::new(
     "inertia",
@@ -69,7 +68,7 @@ impl GemBuilder for Inertia {
 impl GemFacade for Inertia {
     fn meta(&self) -> &GemMeta { &META }
 
-    fn before_build(&self) -> Result<()> {
+    fn before_build(&self) -> InternalResult<()> {
         // Verify the root view exists if it's a file path
         let path = std::path::Path::new(&self.root_view);
         if path.exists() {

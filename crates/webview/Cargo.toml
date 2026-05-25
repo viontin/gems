@@ -7,6 +7,6 @@ description = "[EXPERIMENTAL] Desktop webview gem for Viontin — wry + tao inte
 
 [dependencies]
 viontin-framework = { path = "../../../framework/crates/framework" }
-viontin-gems = { path = "../viontin-gems" }
+viontin-gems = { path = "../gems" }
 wry = "0.55"
 tao = "0.35"

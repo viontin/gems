@@ -23,7 +23,7 @@
 //! ```
 
 use std::sync::{Mutex, OnceLock};
-use viontin_framework::Result;
+use viontin_gems::InternalResult;
 use viontin_framework::ws::WsServer;
 use viontin_gems::{GemBuilder, GemMeta, GemKind, GemFacade, GemBinding};
 
@@ -102,7 +102,7 @@ impl GemFacade for WebviewGem {
         &META
     }
 
-    fn before_build(&self) -> Result<()> {
+    fn before_build(&self) -> InternalResult<()> {
         let mut cfg = config().lock().unwrap();
         cfg.title = self.config.title.clone();
         cfg.width = self.config.width;

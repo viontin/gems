@@ -6,7 +6,7 @@ license = "MIT"
 description = "[EXPERIMENTAL] InertiaJS-compatible server adapter for Viontin"
 
 [dependencies]
+viontin-gems = { path = "../gems" }
 viontin-framework = { path = "../../../framework/crates/framework" }
-viontin-gems = { path = "../viontin-gems" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

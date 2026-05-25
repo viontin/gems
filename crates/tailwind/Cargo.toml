@@ -6,8 +6,7 @@ license = "MIT"
 description = "[EXPERIMENTAL] TailwindCSS gem for Viontin — build-time CSS generation"
 
 [dependencies]
-viontin-framework = { path = "../../../framework/crates/framework" }
-viontin-gems = { path = "../viontin-gems" }
+viontin-gems = { path = "../gems" }
 tailwind-rs-core = "0.15"
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
